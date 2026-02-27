@@ -1,114 +1,118 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poetspot 电子诗集</title>
-    <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle"></script> 
+    <!-- 保留你原有的Blogspot样式 -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* 这里保留你原有的Blogspot页面样式，比如古风背景、字体、侧边栏等 */
         body {
             font-family: 'Microsoft JhengHei', sans-serif;
             background-color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        /* 原有的侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            float: right;
+            margin: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        /* 原有的内容区域样式 */
+        .content {
+            margin-right: 300px;
             padding: 20px;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .header p {
-            font-size: 14px;
-            color: #666;
-        }
-        .player-container {
+        /* 播放器容器样式，与原页面风格一致 */
+        .swf-player-container {
             width: 100%;
-            max-width: 800px;
-            height: 600px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
+            max-width: 500px;
+            height: 400px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             overflow: hidden;
             background-color: #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        #player {
-            width: 100%;
-            height: 100%;
-        }
-        .instructions {
+        /* 操作提示样式 */
+        .player-instructions {
             text-align: center;
-            margin-top: 20px;
             font-size: 14px;
             color: #666;
-        }
-        .error-message {
-            text-align: center;
-            color: #ff4444;
-            margin-top: 10px;
-            font-size: 14px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📖 Poetspot 电子诗集</h1>
-        <p>使用Ruffle播放器播放，支持鼠标/手指滑动翻页</p>
+    <!-- 原有的侧边栏内容 -->
+    <div class="sidebar">
+        <!-- 这里保留你原有的侧边栏内容，比如日历、链接、装饰等 -->
+        <h3>📅 日历</h3>
+        <!-- 日历代码 -->
+        <h3>🔗 相关链接</h3>
+        <!-- 链接列表 -->
+        <h3>🎨 装饰元素</h3>
+        <!-- 荷花装饰等 -->
     </div>
-    <div class="player-container">
-        <div id="player"></div>
-    </div>
-    <div class="instructions">
-        <p>👆 操作说明：点击右下角或右侧区域，向左上或左侧滑动进行翻页</p>
-    </div>
-    <div id="error-message" class="error-message"></div>
 
+    <!-- 原有的内容区域 -->
+    <div class="content">
+        <!-- 这里保留你原有的文章内容，比如介绍文字、图片等 -->
+        <h1>📖 Poetspot 电子诗集</h1>
+        <p>欢迎阅读我的电子诗集，使用鼠标或手指滑动即可翻页。</p>
+        
+        <!-- Ruffle播放器（直接替换这里的代码即可） -->
+        <div class="swf-player-container" id="player-container"></div>
+        <div class="player-instructions">
+            <p>👆 操作说明：点击右下角或右侧区域，向左上或左侧滑动进行翻页</p>
+        </div>
+
+        <!-- 原有的其他文章内容 -->
+        <h2>📝 诗集介绍</h2>
+        <p>这里是诗集的详细介绍...</p>
+    </div>
+
+    <!-- Ruffle播放器脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.1.0/dist/ruffle.js"></script> 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 使用Ruffle API初始化播放器
+            // 初始化Ruffle播放器
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
             
-            // 设置播放器配置
+            // 关键配置：确保兼容性和功能正常
             player.config = {
                 autoplay: 'on',
                 muted: false,
                 fullscreen: true,
                 allowScriptAccess: 'always',
-                // 配置渲染后端，解决画面空白问题
-                backend: 'webgl,canvas,software'
+                backend: 'canvas', // 使用canvas渲染，避免WebGL兼容性问题
+                unmuteOverlay: 'hidden',
+                contextMenu: 'enabled'
             };
             
             // 加载SWF文件
             player.load('https://raw.githubusercontent.com/hilqt/swf-files/main/poet7.swf'); 
             
-            // 将播放器添加到页面
-            document.getElementById('player').appendChild(player);
+            // 将播放器添加到容器中
+            document.getElementById('player-container').appendChild(player);
             
-            // 监听错误事件
-            player.addEventListener('error', function(event) {
-                document.getElementById('error-message').textContent = 
-                    '加载失败：' + event.message + '，请刷新页面重试或检查网络连接';
-            });
-            
-            // 监听加载完成事件
-            player.addEventListener('load', function() {
-                document.getElementById('error-message').textContent = '';
-                console.log('SWF文件加载成功');
+            // 错误处理，方便排查问题
+            player.addEventListener('error', function(e) {
+                console.error('Ruffle加载错误:', e);
+                document.getElementById('player-container').innerHTML = 
+                    '<div style="text-align: center; padding: 50px; color: #ff0000;">' +
+                    '加载失败，请刷新页面重试或检查网络连接' +
+                    '</div>';
             });
         });
     </script>
 </body>
 </html>
+
