@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetspot 电子诗集</title>
+    <!-- 引入Ruffle播放器 -->
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 14px;
+            color: #666;
+        }
+        .player-container {
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        ruffle-player {
+            width: 100%;
+            height: 100%;
+        }
+        .instructions {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📖 Poetspot 电子诗集</h1>
+        <p>使用Ruffle播放器播放，支持鼠标/手指滑动翻页</p>
+    </div>
+    <div class="player-container">
+        <ruffle-player 
+            src="https://raw.githubusercontent.com/hilqt/swf-files/main/poet7.swf" 
+            allowfullscreen
+            autoplay
+        ></ruffle-player>
+    </div>
+    <div class="instructions">
+        <p>👆 操作说明：点击右下角或右侧区域，向左上或左侧滑动进行翻页</p>
+    </div>
+</body>
+</html>
